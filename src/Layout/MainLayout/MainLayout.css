@@ -1,0 +1,10 @@
+.main-layout__container {
+	display: flex;
+}
+.main-layout__items {
+	flex-grow: 1;
+}
+.main-layout__content {
+	padding-left: 50px;
+	padding-right: 50px;
+}

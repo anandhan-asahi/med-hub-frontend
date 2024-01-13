@@ -1,0 +1,15 @@
+.header__container {
+	background-color: #448ee4;
+}
+.header-image {
+	height: 40px;
+	width: 50px;
+}
+.header-links a {
+	color: #000000 !important;
+}
+
+.header-links .active {
+	color: #ffffff !important;
+	font-weight: 600;
+}

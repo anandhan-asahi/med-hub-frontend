@@ -10,7 +10,7 @@
 	background-repeat: no-repeat;
 	background-position: center;
 }
-.login-form {
+.register-form {
 	padding: 45px;
 	background-color: rgba(0, 0, 0, 0.2);
 	border-radius: 30px;
@@ -20,9 +20,9 @@
 	border: 1px rgba(0, 0, 0, 0.1) solid;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-.login-form__image {
-	height: 40%;
-	width: 40%;
+.register-form__image {
+	height: 25%;
+	width: 25%;
 	align-self: center;
 }
 .form-label {
@@ -50,14 +50,17 @@
 	background-color: #6da1de;
 	color: #000000;
 }
-.login-form-link__container {
+.form-name-container {
 	display: flex;
-	justify-content: end;
-	margin-top: 20px;
-	gap: 10px;
+	gap: 20px;
 }
-.login-form-link {
-	text-decoration: none;
-	color: #448ee4;
-	font-weight: 700;
+.form-name-container > div {
+	width: 33%;
+}
+.mail-container {
+	display: flex;
+	gap: 20px;
+}
+.mail-container div:nth-child(2) {
+	flex-grow: 1;
 }
