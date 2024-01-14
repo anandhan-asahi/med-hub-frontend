@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./LoginForm.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MedHubLogo from "../../assets/images/med-hub-logo.png";
 import { handleDoctorLogin } from "../../services/doctorService";
 import { API_STATUS } from "../../utils/constants";
@@ -44,6 +44,19 @@ const LoginForm = () => {
 			}
 		}
 	};
+
+	useEffect(() => {
+		const isDoctorAuthenticated = localStorage.getItem(
+			"isDoctorAuthenticated"
+		);
+		const doctorAccessToken = localStorage.getItem("doctorAccessToken");
+		if (
+			(isDoctorAuthenticated && isDoctorAuthenticated === "true") ||
+			doctorAccessToken
+		) {
+			navigate("/dashboard");
+		}
+	}, [navigate]);
 
 	return (
 		<div className="form__container">
