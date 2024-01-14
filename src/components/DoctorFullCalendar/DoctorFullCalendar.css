@@ -1,0 +1,29 @@
+.fc-media-screen {
+	height: 85vh;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+.fc-header-toolbar {
+	position: "relative";
+	@media screen and (max-width: 768px) {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+}
+
+.fc-header-toolbar .fc-toolbar-title {
+	@media screen and (max-width: 768px) {
+		font-size: 25px;
+	}
+}
+
+.fc-button-primary {
+	background-color: #448ee4 !important;
+}
+
+.fc-scrollgrid-sync-inner a {
+	text-decoration: none;
+	color: black;
+}

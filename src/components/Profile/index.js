@@ -15,6 +15,7 @@ import { login } from "../../redux/features/auth/doctorAuthSlice";
 
 const Profile = () => {
 	const doctor = useSelector((state) => state.doctor.doctor);
+	const [error, setError] = useState("");
 	const initialValue = {
 		firstName: doctor?.firstName || "",
 		lastName: "",
@@ -27,6 +28,7 @@ const Profile = () => {
 	const [selectedOptions, setSelectedOptions] = useState([]);
 	const [selectedOption, setSelectedOption] = useState(null);
 	const [formValues, setFormValues] = useState(initialValue);
+	const [formUpdatedValues, setFormUpdatedValues] = useState({});
 	const [availableTimings, setAvailableTimings] = useState([]);
 	const [doctorProfessions, setDoctorProfessions] = useState([]);
 	const [loading, setLoading] = useState(false);
@@ -38,13 +40,16 @@ const Profile = () => {
 		formValues.phone &&
 		formValues.email &&
 		formValues.doctorProfessionId &&
-		formValues.yearsOfExperience &&
 		formValues.availableTimings.length
 			? true
 			: false;
 
 	const handleMultiSelectChange = (selectedValues) => {
 		setFormValues((prevState) => ({
+			...prevState,
+			["availableTimings"]: selectedValues?.map((value) => value.value),
+		}));
+		setFormUpdatedValues((prevState) => ({
 			...prevState,
 			["availableTimings"]: selectedValues?.map((value) => value.value),
 		}));
@@ -56,11 +61,19 @@ const Profile = () => {
 			...prevState,
 			["doctorProfessionId"]: selectedValue ? selectedValue.value : null,
 		}));
+		setFormUpdatedValues((prevState) => ({
+			...prevState,
+			["doctorProfessionId"]: selectedValue ? selectedValue.value : null,
+		}));
 		setSelectedOption(selectedValue ? selectedValue.label : null);
 	};
 
 	const formChangeHandler = (key, value) => {
 		setFormValues((prevState) => ({
+			...prevState,
+			[key]: value,
+		}));
+		setFormUpdatedValues((prevState) => ({
 			...prevState,
 			[key]: value,
 		}));
@@ -86,7 +99,6 @@ const Profile = () => {
 	}, []);
 
 	useEffect(() => {
-		console.log(doctor);
 		setFormValues((prevState) => ({
 			...prevState,
 			...doctor,
@@ -108,10 +120,19 @@ const Profile = () => {
 
 	const submitHandler = async (e) => {
 		e.preventDefault();
-		const response = await updateDoctorDetails(doctor.id, formValues);
-		dispatch(login(response.data));
-		setLoading(false);
-		navigate("/dashboard");
+		setLoading(true);
+		const response = await updateDoctorDetails(
+			doctor.id,
+			formUpdatedValues
+		);
+		if (response?.data.status === API_STATUS.ERROR) {
+			setLoading(false);
+			setError(response?.data.message);
+		} else if (response?.status === API_STATUS.SUCCESS) {
+			dispatch(login(response.data));
+			setLoading(false);
+			navigate("/dashboard");
+		}
 	};
 
 	return (
@@ -210,6 +231,7 @@ const Profile = () => {
 									className="form-control"
 									placeholder="Enter your years of experience"
 									id="experience"
+									min="0"
 									value={formValues.yearsOfExperience}
 									onChange={(e) =>
 										formChangeHandler(
@@ -247,11 +269,15 @@ const Profile = () => {
 							</div>
 							<div className="col-12 mt-3 col-lg-12 d-flex justify-content-center">
 								<div className="button__container profile-submit-button">
-									{/* {error && <p className="error-message">{error}</p>} */}
+									{error && (
+										<p className="error-message mt-2">
+											{error}
+										</p>
+									)}
 									{!loading ? (
 										<button
 											type="submit"
-											className="btn submit-button"
+											className="btn submit-button mt-2"
 											disabled={
 												isFormValid ? false : true
 											}

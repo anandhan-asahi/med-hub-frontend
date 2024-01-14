@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
-import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
 import Doctors from "./components/Doctors";
 import Patients from "./components/Patients";

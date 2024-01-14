@@ -4,8 +4,10 @@ import interactionPlugin, { Draggable } from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { useEffect, useState } from "react";
 import { fetchDoctorAppointments } from "../../services/doctorService";
-import { API_STATUS } from "../../utils/constants";
+import { API_STATUS, randomColors } from "../../utils/constants";
 import { useSelector } from "react-redux";
+import "./DoctorFullCalendar.css";
+import { generateRandomNumber } from "../../utils/helpers/generateRandomNumber";
 
 const DoctorFullCalendar = () => {
 	const [appointments, setAppointments] = useState([]);
@@ -55,6 +57,10 @@ const DoctorFullCalendar = () => {
 									appointment?.patientId?.age,
 								start: appointment?.appointmentStartTime,
 								end: appointment?.appointmentEndTime,
+								textColor: "#ffffff",
+								backgroundColor:
+									randomColors[generateRandomNumber(9)],
+								borderColor: "transparent",
 							};
 					  })
 					: []

@@ -19,6 +19,9 @@
 	flex-direction: column;
 	border: 1px rgba(0, 0, 0, 0.1) solid;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	@media screen and (max-width: 768px) {
+		padding: 24px;
+	}
 }
 .login-form__image {
 	height: 40%;
@@ -36,6 +39,10 @@
 	display: flex;
 	justify-content: center;
 	position: relative;
+	@media screen and (max-width: 768px) {
+		height: 40px;
+		width: 60%;
+	}
 }
 .error-message {
 	color: red;

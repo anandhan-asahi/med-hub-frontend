@@ -26,6 +26,7 @@ const MainLayout = (props) => {
 		if (!isDoctorAuthenticated || !doctorAccessToken) {
 			localStorage.removeItem("isDoctorAuthenticated");
 			localStorage.removeItem("doctorAccessToken");
+			localStorage.removeItem("doctorRefreshToken");
 			navigate("/");
 		}
 	}, [navigate]);

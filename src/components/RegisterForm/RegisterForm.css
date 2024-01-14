@@ -35,6 +35,10 @@
 	height: 45px;
 	display: flex;
 	justify-content: center;
+	@media screen and (max-width: 768px) {
+		height: 40px;
+		width: 60%;
+	}
 }
 .submit-button {
 	background-color: #448ee4;

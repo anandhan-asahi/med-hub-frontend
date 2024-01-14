@@ -10,6 +10,7 @@ const Header = () => {
 	const handleDoctorLogout = () => {
 		localStorage.removeItem("isDoctorAuthenticated");
 		localStorage.removeItem("doctorAccessToken");
+		localStorage.removeItem("doctorRefreshToken");
 		dispatch(logout());
 		navigate("/");
 	};

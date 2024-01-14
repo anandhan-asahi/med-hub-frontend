@@ -12,11 +12,6 @@ export const handleDoctorLogin = async (values) => {
 	}
 };
 
-export const handleDoctorLogout = (values) => {
-	localStorage.removeItem("isDoctorAuthenticated");
-	localStorage.removeItem("doctorAccessToken");
-};
-
 export const fetchDoctorAppointments = async (id) => {
 	try {
 		const response = await doctorAxiosInstance.get(

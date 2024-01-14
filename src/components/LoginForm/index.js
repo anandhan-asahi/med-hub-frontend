@@ -30,11 +30,16 @@ const LoginForm = () => {
 				setError("");
 				setLoading(false);
 				dispatch(login(response?.data.doctor));
+				console.log(response?.data);
 				localStorage.setItem(
 					"doctorAccessToken",
 					response?.data?.auth?.token
 				);
 				localStorage.setItem("isDoctorAuthenticated", true);
+				localStorage.setItem(
+					"doctorRefreshToken",
+					response?.data?.refresh?.token
+				);
 				navigate("/dashboard");
 			}
 		}
@@ -56,7 +61,7 @@ const LoginForm = () => {
 							type="email"
 							className="form-control"
 							id="email"
-							placeholder="johndoe@example.com"
+							placeholder="john.doe@company.com"
 							value={email}
 							onChange={(e) => {
 								setEmail(e.target.value.trim());
@@ -74,6 +79,7 @@ const LoginForm = () => {
 							type="password"
 							className="form-control"
 							id="password"
+							placeholder="password"
 							value={password}
 							onChange={(e) => {
 								setPassword(e.target.value);
