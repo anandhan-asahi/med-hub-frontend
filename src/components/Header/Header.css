@@ -5,11 +5,22 @@
 	height: 40px;
 	width: 50px;
 }
-.header-links a {
+.header-main-container {
+	@media screen and (max-width: 768px) {
+		justify-content: space-between;
+	}
+}
+.desktop-header-links {
+	display: flex;
+	@media screen and (max-width: 768px) {
+		display: none;
+	}
+}
+.desktop-header-links a {
 	color: #000000 !important;
 }
 
-.header-links .active {
+.desktop-header-links .active {
 	color: #ffffff !important;
 	font-weight: 600;
 }

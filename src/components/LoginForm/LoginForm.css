@@ -35,8 +35,15 @@
 	height: 45px;
 	display: flex;
 	justify-content: center;
+	position: relative;
 }
-.submit-button {
+.error-message {
+	color: red;
+	font-weight: 600;
+	position: absolute;
+	top: -38px;
+}
+.error-message .submit-button {
 	background-color: #448ee4;
 	height: 100%;
 	border-radius: 15px;
@@ -49,6 +56,11 @@
 .submit-button:active {
 	background-color: #6da1de;
 	color: #000000;
+}
+.submit-button:disabled {
+	background-color: #b2b4b3;
+	color: #000000;
+	border: none;
 }
 .login-form-link__container {
 	display: flex;

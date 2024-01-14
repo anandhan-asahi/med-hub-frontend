@@ -2,26 +2,42 @@ import { Link, useNavigate } from "react-router-dom";
 import "./LoginForm.css";
 import { useState } from "react";
 import MedHubLogo from "../../assets/images/med-hub-logo.png";
-import { handleDoctorLogin } from "../../services/doctorLoginService";
+import { handleDoctorLogin } from "../../services/doctorService";
+import { API_STATUS } from "../../utils/constants";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/features/auth/doctorAuthSlice";
 
 const LoginForm = () => {
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [error, setError] = useState("");
+	const dispatch = useDispatch();
+
 	const onSubmitHandler = async (e) => {
 		e.preventDefault();
 		if (email && password) {
 			setLoading(true);
 			const response = await handleDoctorLogin({ email, password });
-			console.log(response, "------");
-			if (response?.data?.token) {
-				// navigate(path);
-				return;
+			if (response?.data.status === API_STATUS.ERROR) {
+				setLoading(false);
+				setError(response?.data.message);
+			} else if (
+				response?.status === API_STATUS.SUCCESS &&
+				response?.data?.auth?.token
+			) {
+				setError("");
+				setLoading(false);
+				dispatch(login(response?.data.doctor));
+				localStorage.setItem(
+					"doctorAccessToken",
+					response?.data?.auth?.token
+				);
+				localStorage.setItem("isDoctorAuthenticated", true);
+				navigate("/dashboard");
 			}
 		}
-
-		// navigate("/dashboard");
 	};
 
 	return (
@@ -65,8 +81,13 @@ const LoginForm = () => {
 						/>
 					</div>
 					<div className="button__container">
+						{error && <p className="error-message">{error}</p>}
 						{!loading ? (
-							<button type="submit" className="btn submit-button">
+							<button
+								type="submit"
+								className="btn submit-button"
+								disabled={email && password ? false : true}
+							>
 								Submit
 							</button>
 						) : (

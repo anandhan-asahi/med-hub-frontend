@@ -1,20 +1,38 @@
 import Base from "axios";
-const axios = Base.create({
+export const doctorAxiosInstance = Base.create({
 	withCredentials: false,
 	baseURL: `${process.env.REACT_APP_API_BASE_URL}`,
 });
-axios.interceptors.request.use(
+doctorAxiosInstance.interceptors.request.use(
 	(config) => {
 		config.headers["Access-Control-Allow-Origin"] = "*";
 		if (typeof window === "undefined") {
 			return config;
 		}
-		const token = localStorage?.getItem("accessToken");
+		const token = localStorage?.getItem("doctorAccessToken");
 		if (token) {
-			config.headers.Authorization = `Bearer ${token}`;
+			config.headers.Authorization = `${token}`;
 		}
 		return config;
 	},
 	(error) => Promise.reject(error)
 );
-export default axios;
+
+export const patientAxiosInstance = Base.create({
+	withCredentials: false,
+	baseURL: `${process.env.REACT_APP_API_BASE_URL}`,
+});
+patientAxiosInstance.interceptors.request.use(
+	(config) => {
+		config.headers["Access-Control-Allow-Origin"] = "*";
+		if (typeof window === "undefined") {
+			return config;
+		}
+		const token = localStorage?.getItem("patientAccessToken");
+		if (token) {
+			config.headers.Authorization = `${token}`;
+		}
+		return config;
+	},
+	(error) => Promise.reject(error)
+);

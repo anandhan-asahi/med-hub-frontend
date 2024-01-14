@@ -1,20 +1,30 @@
 import "./Header.css";
 import MedHubLogoWhite from "../../assets/images/med-hub-logo-white.jpg";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/features/auth/doctorAuthSlice";
 
 const Header = () => {
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const handleDoctorLogout = () => {
+		localStorage.removeItem("isDoctorAuthenticated");
+		localStorage.removeItem("doctorAccessToken");
+		dispatch(logout());
+		navigate("/");
+	};
+
 	return (
 		<header className="p-3 mb-3 border-bottom header__container">
 			<div className="container">
-				<div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+				<div className="d-flex flex-wrap align-items-center header-main-container justify-content-lg-start">
 					<Link
 						to="/"
 						className="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none"
 					>
 						<img className="header-image" src={MedHubLogoWhite} />
 					</Link>
-
-					<ul className="nav col-12 col-lg-auto me-lg-auto ms-lg-4 mb-2 justify-content-center mb-md-0 header-links">
+					<ul className="nav col col-lg-auto me-lg-auto ms-lg-4 mb-2 justify-content-center mb-md-0 desktop-header-links">
 						<li>
 							<NavLink
 								to="/dashboard"
@@ -62,27 +72,22 @@ const Header = () => {
 							aria-labelledby="dropdownUser1"
 						>
 							<li>
-								<a className="dropdown-item" href="#">
-									New project...
-								</a>
-							</li>
-							<li>
-								<a className="dropdown-item" href="#">
+								<Link className="dropdown-item" to="#">
 									Settings
-								</a>
+								</Link>
 							</li>
 							<li>
-								<a className="dropdown-item" href="#">
+								<Link className="dropdown-item" to="/profile">
 									Profile
-								</a>
+								</Link>
 							</li>
 							<li>
 								<hr className="dropdown-divider" />
 							</li>
-							<li>
-								<a className="dropdown-item" href="#">
+							<li onClick={handleDoctorLogout}>
+								<Link className="dropdown-item" to="#">
 									Sign out
-								</a>
+								</Link>
 							</li>
 						</ul>
 					</div>

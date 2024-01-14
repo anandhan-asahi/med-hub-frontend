@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./RegisterForm.css";
 import { useState } from "react";
 import MedHubLogo from "../../assets/images/med-hub-logo.png";
@@ -22,7 +22,11 @@ const RegisterForm = () => {
 					className="register-form col col-lg-8"
 					onSubmit={onSubmitHandler}
 				>
-					<img className="register-form__image" src={MedHubLogo} />
+					<img
+						className="register-form__image"
+						src={MedHubLogo}
+						alt={"Med Hub Logo"}
+					/>
 					<div className="form-name-container">
 						<div className="mb-3">
 							<label htmlFor="first-name" className="form-label">
